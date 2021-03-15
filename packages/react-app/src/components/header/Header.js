@@ -13,28 +13,23 @@ import Button from '../buttons/Button'
 
 
 const Header = ({title, nav1, nav2, nav3, nav4, provider, loadWeb3Modal, logoutOfWeb3Modal, darkMode}) => {
-    var theme = createMuiTheme({
-        palette: {
-          type: darkMode ? 'dark' : 'light',
-        },
-      });
     
     const useStyles = makeStyles((theme) => ({
         header: {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: darkMode ? '#141414' : theme.palette.background.default,
+            //backgroundColor: darkMode ? theme.palette.background.dark : theme.palette.background.default,
             borderBottom: `5px solid ${theme.palette.secondary.main}`
         },
         title: {
             display: 'none',
-            color: theme.palette.text.primary,
+            color: darkMode ? theme.palette.text.primary : theme.palette.text.secondary,
             fontVariantCaps: 'all-small-caps',
             [theme.breakpoints.up('sm')]: {
-              display: 'block',
-        },
-        }
+                display: 'block',
+            },},
+        
       }));
     
     const classes = useStyles();

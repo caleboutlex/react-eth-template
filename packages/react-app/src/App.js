@@ -14,27 +14,42 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 
 import Header from './components/header/Header'
+import Landing from './containers/Landing'
+import Make from './containers/Make'
+import Gallery from './containers/Gallery'
 
 function App() {
   const [ provider, loadWeb3Modal, logoutOfWeb3Modal] = useWeb3Modal();
-  const [ darkMode, setDarkmode ] = React.useState(false)
+  const [ darkMode, setDarkmode ] = React.useState(true)
   const { account, library } = useWeb3React();
+  
+  const neonBackground = require('./assets/backgrounds/neon-dark-place.jpg')
+  const wojakwatching = require('./assets/backgrounds/wojakwatching.png')
+  const greenPriceBackground = require('./assets/backgrounds/greenbackground4K.png');
+  const redPriceBackground = require('./assets/backgrounds/redbackground4K.png');
+  const interactive = 'https://cdn.soft8soft.com/AROAJSY2GOEHMOFUVPIOE:8eda00a7b9/applications/nft-wall/nft-wall.html'
   
   var theme = createMuiTheme({
     palette: {
       type: darkMode ? 'dark' : 'light',
       primary: {
         // Purple and green play nicely together.
-        main: "#63474D",
+        main: "#450EFF",
       },
       secondary: {
         // This is green.A700 as hex.
-        main: '#FFA686',
+        main: '#E200F7',
       },
       background: {
-        default: '#FEC196' ,
-        dark: '#63474D'
-      }
+        default: '#1c1c1c',
+        dark: '#1c1c1c',
+        paper: '#42284899'
+      },
+      text: {
+        primary: '#fafafa',
+        secondary: '#ff008d'
+      },
+      
     },
   });
   
@@ -45,8 +60,9 @@ function App() {
     body: {
       display:'flex',
       flexDirection:'column',
-    
-      backgroundColor: darkMode ? '#141414' : theme.palette.background.default,
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: darkMode ? '#1c1c1c' : '#1c1c1c',
     },
     container: {
       display:'flex',
@@ -63,7 +79,18 @@ function App() {
     header: {
      
       minHeight: '8vh'
-    }
+    },
+    background : {
+      width: '100vw',
+      height: '100vh',
+      backgroundImage: darkMode ? `url(${greenPriceBackground})` : `url(${redPriceBackground})`,
+      backgroundSize: 'cover',
+      position:'absolute',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      zIndex: '0'
+    },
+    
   }));
 
   const classes = useStyles();
@@ -71,20 +98,22 @@ function App() {
   return (
     <ThemeProvider theme={theme}> 
       <Router>
+        <Grid  className={classes.background} >
+        </Grid>
         <Grid container className={classes.body}>
           <Grid item className={classes.header}>
             <Header 
               className={classes.header}
-              title='Template'
-              nav1='nav'
-              nav2='nav'
-              nav3='nav'
-              nav4='nav'
+              title='NFT-WALL'
+              nav1='gallery'
+              nav2='PLACE'
+              nav3='Make'
+              nav4='ABOUT'
               provider={provider} 
               loadWeb3Modal={loadWeb3Modal} 
               logoutOfWeb3Modal={logoutOfWeb3Modal}
               darkMode={darkMode}
-
+          
             />
           <Grid item className={classes.banner}>
             <Typography variant='caption' color='textPrimary'>Addres: </Typography>
@@ -98,11 +127,11 @@ function App() {
           </Grid>
           <Grid container className={classes.container}>
               <Switch>
-                <Route path="/" exact component={''}/>
-                <Route path="/presale"  component={''}/>
-                <Route path="/research"  component={''}/>
-                <Route path="/strains"  component={''}/>
-                <Route path="/generator"  component={''}/>
+                <Route path="/" exact component={Landing}/>
+                <Route path="/gallery"  component={Gallery}/>
+                <Route path="/place"  component={''}/>
+                <Route path="/make"  component={Make}/>
+                <Route path="/about"  component={''}/>
               </Switch>
           </Grid>
         </Grid> 
